@@ -1,0 +1,149 @@
+{% extends 'blog/base_blog.html' %}
+{% load static %}
+
+
+{% block hero %}
+<!-- Hero start -->
+<div style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({% static 'img/neom-e-unsplash.jpg' %});height: 50vh;background-position: center;background-repeat: no-repeat;background-size: cover;position: relative;">
+    <div class="hero-text">
+        <h1 class="h1">Adventure is worthwhile</h1>
+        <p>A <strong>TECH Blog</strong> to adventurers hackers</p>
+        <a href="{% url 'list_posts' %}" class="btn btn-light btn-lg">Descubra</a>
+    </div>
+</div>
+<!-- Hero end -->
+{% endblock %}
+
+{% block main %}
+    <!-- Introduction section start-->
+    <section class="mb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3 class="h2">Blog TECH, porque o simples é essencial </h1>
+                        <p class="text-lg lh-lg fw-light">Place a nice <b>introduction</b> here <b>to catch reader's
+                                attention</b>. Lorem ipsum dolor
+                            sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                            magna aliqua. Ut enim ad minim veniam, quis nostrud nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Introduction section end -->
+
+    <!-- Featured section start -->
+    <section>
+        <div class="container">
+            <header class="mb-5">
+                <h2 class="h1">Destaques</h2>
+            </header>
+            {% for mfpost in main_featured_posts %}
+            <div class="row d-flex {% cycle 'flex-row-reverse' '' 'flex-row-reverse' %} g-0 mb-3">
+                <div class="col-lg-5">
+                    <a href="{% url 'detail_post' mfpost.post.id %}"><img class="featured-home-post-image h-100" src="{{mfpost.post.feature_image.url}}"
+                        alt="post image description"></a>
+                </div>
+                <div class="col-lg-7">
+                    <div class="background-gray-200 py-5 px-5 h-100">
+                        <h4 class="fw-light text-gray-700">{{mfpost.post.category}}</h4>
+                        <h1>{{mfpost.post.title}}</h1>
+                        <div class="featured-home-post-author">
+                            <img src="{{mfpost.post.author.profile.avatar.url}}" alt="autor">
+                            <span>{{mfpost.post.author.first_name}} {{mfpost.post.author.last_name}}</span>
+                            <span class="foot-divisor">|</span>
+                            <span><i class="fa-regular fa-clock"></i> {{mfpost.post.created_at|date:"d M, Y"}}</span>
+                            <span class="foot-divisor">|</span>
+                            <span><i class="fa-regular fa-comment"></i> 12</span>
+                        </div>
+
+                        <p>{{mfpost.post.mini_description}}</p>
+
+                        
+                        <a class="btn btn-outline-secondary" href="{% url 'detail_post' mfpost.post.id %}">Ler mais</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- 
+            <div class="row d-flex g-0 mb-3">
+                <div class="col-lg-5">
+                    <img class="featured-home-post-image h-100" src="{% static '/img/neom-l-unsplash.jpg' %}"
+                        alt="post image description">
+                </div>
+                <div class="col-lg-7">
+                    <div class="py-5 px-5 h-100">
+                        <h4 class="fw-light text-gray-700">Categoria do post</h4>
+                        <h1>Chat GPT Prompts</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrude consectetur
+                            adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                        <div class="featured-home-post-author">
+                            <img src="https://avatars.githubusercontent.com/u/88542223?v=4" alt="autor">
+                            <span class="foot-divisor">|</span>
+                            <span><i class="fa-regular fa-clock"></i> 2 months ago</span>
+                            <span class="foot-divisor">|</span>
+                            <span><i class="fa-regular fa-comment"></i> 12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+
+        </div>
+    </section>
+    <!-- Featured section end -->
+
+    <!-- Last posts section start -->
+    <section>
+        <div class="container">
+            <header class="mb-5">
+                <h2>Últimas novidades</h2>
+            </header>
+            <div class="row gy-4">
+                {% for lpost in last_posts %}
+                <div class="col-md-4">
+                    <a href="./post-detail.html">
+                        <a href="{% url 'detail_post' lpost.id %}"><img class="last-section-posts-image" src="{{lpost.feature_image.url}}"></a>
+                    </a>
+                    <div class="d-flex align-items-center justify-content-between mb-2 mt-2">
+                        <small class="text-gray-600">{{lpost.created_at|date:"d M, Y"}}</small>
+                        <a class="small fw-bold text-uppercase small text-gray-600">{{lpost.category}}</a>
+                    </div>
+                    <h3>{{lpost.title}}</h3>
+                    <p>{{lpost.mini_description}}</p>
+                    <a class="btn btn-outline-secondary" href="{% url 'detail_post' lpost.id %}">Ler mais</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Last posts section end -->
+
+    <!-- Subscribe section start -->
+    <section>
+        <div class="container">
+            <header class="mb-5">
+                <h2>Inscreva-se para novidades</h2>
+            </header>
+            <p class="mb-3 text-lg lh-lg fw-light">Toda semana novos conteúdos nas áreas de tecnologia e de negócios
+                para você ficar por dentro do que há de mais atual no Brasil e no mundo.</p>
+            <div class="row">
+                <form method="POST" action="{% url 'newsletter_signup' %}">
+                    <div class="col-lg-8">
+                        <div class="input-group mb-3">
+                            {% csrf_token %}
+                            <!--<input >-->
+                            {{form.email}}
+                            <button class="btn btn-outline-secondary px-5" type="submit"
+                                id="button-addon2">Inscrever</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+    <!-- Subscribe section end-->
+{% endblock %}

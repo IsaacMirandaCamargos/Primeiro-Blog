@@ -1,0 +1,69 @@
+{% extends 'blog/base_blog.html' %}
+{% load static %}
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row gy-5">
+                <main class="col-lg-8">
+                    <div class="container">
+                        <header>
+                            <h2 class="mb-5">Últimas novidades</h2>
+                            {% if category_search %}
+                            <a class="btn btn-outline-secondary mb-3" href="?{% if tag_search %}&tag={{tag_search.id}}{% endif %}{% if text_search %}&search={{text_search}}{% endif %}"><i class="fa-solid fa-xmark"></i><span class="p-1"></span>{{category_search.name}}</a>
+                            {% endif %}
+                            {% if tag_search %}
+                            <a class="btn btn-outline-secondary mb-3" href="?{% if category_search %}&category={{category_search.id}}{% endif %}{% if text_search %}&search={{text_search}}{% endif %}"><i class="fa-solid fa-xmark"></i><span class="p-1"></span>{{tag_search.formated_name}}</a>
+                            {% endif %}
+                            {% if text_search %}
+                            <a class="btn btn-outline-secondary mb-3" href="?{% if category_search %}&category={{category_search.id}}{% endif %}{% if tag_search %}&tag={{tag_search.id}}{% endif %}"><i class="fa-solid fa-xmark"></i><span class="p-1"></span>"{{text_search}}"</a>
+                            {% endif %}
+                            
+                        </header>
+
+                        <div class="row gy-4 mb-5">
+                            {% for post in posts %}
+                            <div class="col-xl-6">
+                                <a href="{% url 'detail_post' post.id %}">
+                                    <img class="last-section-posts-image"
+                                        src="{{post.feature_image.url}}">
+                                </a>
+                                <div class="d-flex align-items-center justify-content-between mb-2 mt-2">
+                                    <small class="text-gray-600">{{post.created_at|date:"d M, Y"}}</small>
+                                    <a class="small fw-bold text-uppercase small text-gray-600">{{post.category}}</a>
+                                </div>
+                                <h3>{{post.title}}</h3>
+                                <p>{{post.mini_description}}</p>
+                                <a class="btn btn-outline-secondary" href="{% url 'detail_post' post.id %}">Ler mais</a>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                        <div class="row">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center mt-5">
+
+                                    {% if posts.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page=1{% if category_search %}&category={{category_search.id}}{% endif %}{% if tag_search %}&tag={{tag_search.id}}{% endif %}{% if text_search %}&search={{text_search}}{% endif %}"><i class="fa-solid fa-angles-left"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="?page={{posts.previous_page_number}}{% if category_search %}&category={{category_search.id}}{% endif %}{% if tag_search %}&tag={{tag_search.id}}{% endif %}{% if text_search %}&search={{text_search}}{% endif %}"><i class="fa-solid fa-chevron-left"></i></a></li>
+                                    {% endif %}
+
+                                    <li class="page-item"><a class="page-link " href="#">Página {{posts.number}} de {{posts.paginator.num_pages}}</a></li>
+                                    
+                                    {% if posts.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{posts.next_page_number}}{% if category_search %}&category={{category_search.id}}{% endif %}{% if tag_search %}&tag={{tag_search.id}}{% endif %}{% if text_search %}&search={{text_search}}{% endif %}"><i class="fa-solid fa-chevron-right"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="?page={{posts.paginator.num_pages}}{% if category_search %}&category={{category_search.id}}{% endif %}{% if tag_search %}&tag={{tag_search.id}}{% endif %}{% if text_search %}&search={{text_search}}{% endif %}"><i class="fa-solid fa-angles-right"></i></a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </main>
+
+                {% include 'blog/components/aside.html' %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+

@@ -1,0 +1,163 @@
+{% extends 'blog/base_blog.html' %}
+{% load hitcount_tags %}
+{% load static %}
+
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row gy-5">
+
+                <main class="col-lg-8">
+                    <div class="container">
+                        <img class="img-fluid w-100 mb-3"
+                            src="{{post.feature_image.url}}"
+                            alt="principal">
+                        <h1>{{post.title}}</h1>
+                        <div class="featured-home-post-author mb-5">
+                            <img src="{{post.author.profile.avatar.url}}" alt="autor">
+                            <span>{{post.author.first_name}} {{post.author.last_name}}</span>
+                            <span class="foot-divisor">|</span>
+                            <span><i class="fa-regular fa-clock"></i> {{post.created_at|date:"d M, Y"}}</span>
+                            <span class="foot-divisor">|</span>
+                            <span><i class="fa-regular fa-comment"></i> {% get_hit_count for post %}</span>
+                        </div>
+                    </div>
+
+                    <div class="container"> 
+                        <p class="mb-4 text-gray-700">{{post.body|safe}}</p>
+                        <!--<p class="mb-4 text-gray-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <img src="https://images.unsplash.com/photo-1682695798522-6e208131916d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+                            class="img-fluid mb-4" alt="image">
+                        <p class="mb-4 text-gray-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p class="mb-4 text-gray-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>-->
+
+
+                        <div class="tags-container mb-5">
+                            {% for tag in post.tags.all %}
+                            <div><a class="tag border-gray-400 py-2 px-4 fw-bold" href="#">{{tag.formated_name}}</a></div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="container px-4 mb-5">
+                            <div class="row gx-5">
+                                {% if previous_post %}
+                                <div class="col">
+                                    <a href="/blog/posts/{{previous_post.id}}">
+                                    <div class="p-3 icon-container border d-flex align-items-center">
+                                        <div class="icon-prev"><i class="fas fa-angle-left"></i></div>
+                                        <p class="h6 text-gray-600 fw-bold">{{previous_post.title}}<br/>
+                                        <small class="text-gray-400">{{previous_post.body}}</small></p>
+                                    </div>
+                                    </a>
+                                </div>
+                                {% endif %}
+                                
+                                {% if next_post %}
+                                <div class="col">
+                                    <a href="/blog/posts/{{next_post.id}}">
+                                    <div class="p-3 icon-container border d-flex align-items-center">
+                                        <div class="icon-prev"><i class="fas fa-angle-right"></i></div>
+                                        <p class="h6 text-gray-600 fw-bold">{{next_post.title}}<br/>
+                                        <small class="text-gray-400">{{next_post.body}}</small></p>
+                                    </div>
+                                    </a>
+                                </div>
+                                {% endif %}
+
+                            
+                            </div>
+
+                        </div>
+
+                        <div class="mb-5">
+                            <header>
+                                <p><strong class="fw-bold">Comentários</strong> <span class="fw-light">(3)</span></p>
+                            </header>
+
+                            <div class="d-flex align-items-start">
+                                <img class="user-comment-image"
+                                    src="https://avatars.githubusercontent.com/u/88542223?v=4" alt="autor">
+                                <div class="mx-3 d-flex flex-column">
+                                    <strong>Leandro Cruvinel</strong>
+                                    <small class="fw-light text-gray-500 mb-3">May, 2016</small>
+                                    <p class="text-gray-600 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+                                        ad minim veniam.</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-start">
+                                <img class="user-comment-image"
+                                    src="https://avatars.githubusercontent.com/u/88542223?v=4" alt="autor">
+                                <div class="mx-3 d-flex flex-column">
+                                    <strong>Leandro Cruvinel</strong>
+                                    <small class="fw-light text-gray-500 mb-3">May, 2016</small>
+                                    <p class="text-gray-600 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+                                        ad minim veniam.</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-start">
+                                <img class="user-comment-image"
+                                    src="https://avatars.githubusercontent.com/u/88542223?v=4" alt="autor">
+                                <div class="mx-3 d-flex flex-column">
+                                    <strong>Leandro Cruvinel</strong>
+                                    <small class="fw-light text-gray-500 mb-3">May, 2016</small>
+                                    <p class="text-gray-600 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+                                        ad minim veniam.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <header>
+                                <h5>Deixe um comentário</h5>
+                            </header>
+                            <div>
+                                <form>
+                                    <div class="row">
+                                        <div class="col">
+
+                                            <label for="exampleInputPassword1" class="form-label">Nome</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1">
+
+                                        </div>
+                                        <div class="col">
+
+                                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                                aria-describedby="emailHelp">
+                                            <div id="emailHelp" class="form-text">Não será publicado</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Comentário</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1"
+                                            rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-secondary">Enviar</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+                </main>
+
+                {% include 'blog/components/aside.html' %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

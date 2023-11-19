@@ -1,0 +1,63 @@
+{% load static %}
+{% load hitcount_tags %}
+
+<!--Start Aside-->
+<aside class="col-lg-4">
+
+    <div class="card mb-5 p-3">
+        <div class="card-body">
+            <h3 class="mb-5">Posts mais vistos</h3>
+            {% for mv_post in most_viewed %}
+            <div class="d-flex align-items-center mb-2">
+                <a href="{% url 'detail_post' mv_post.id %}"><img class="last-posts-image img-fluid flex-shrink-0"
+                    src="{{mv_post.feature_image.url}}"></a>
+                <div class="ms-2 text-muted">
+                    <p class="fw-bold mb-0">{{mv_post.title}}</p>
+                    <p><i class="fa-solid fa-eye"></i> {% get_hit_count for mv_post %} <span class="px-2">|</span> <i
+                            class="fa-regular fa-comment"></i> 12</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!--Start Categorias-->
+    <div class="card mb-5 p-3">
+        <div class="card-body">
+            <h3 class="mb-5">Categorias</h3>
+            <table class="table table-striped">
+                <tbody class="fw-bold">
+                    {% for category in categories %}
+                    <tr class="cursor-pointer">
+                        {% if post %}
+                        <td class="text-gray-600 {% if post.category.id == category.id %} selected {% endif %}">{{category.name}}</td>
+                        <td class="text-end text-gray-600 {% if post.category.id == category.id %} selected {% endif %}">{{category.count}}</td>
+                        {% else %}
+                        <td><a class="text-gray-600 fw-bold" href="/blog?category={{category.id}}{% if tag_search %}&tag={{tag_search.id}}{% endif %}{% if text_search %}&search={{text_search}}{% endif %}">{{category.name}}</a></td>
+                        <td class="text-end text-gray-600">{{category.count}}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--End Categorias-->
+
+
+
+    <!--Start Tags-->
+    <div class="card mb-5 p-3">
+        <div class="card-body">
+            <h3 class="mb-5">TAGS</h3>
+            <div class="tags-container">
+
+                {% for tag in tags %}
+                <div><a class="tag border-gray-400 py-2 px-4 fw-bold" href="/blog?tag={{tag.id}}{% if category_search %}&category={{category_search.id}}{% endif %}{% if text_search %}&search={{text_search}}{% endif %}">{{tag.formated_name}}</a></div>
+                {% endfor %}
+
+            </div>
+        </div>
+    <!--End Tags-->
+</aside>
+<!--End Aside-->
